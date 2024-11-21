@@ -53,7 +53,6 @@
       </el-dialog>
 
       <el-card shadow="always" class="all-status-card" v-loading="table_loading">
-        <!-- 数据中心 -->
         <h4 class="card-title">数据中心<span style="font-size:1rem">&nbsp;DataCenter</span></h4>
         
 
@@ -122,11 +121,8 @@
       </el-card>
 
       <el-card shadow="always" class="all-status-card" v-loading="table_loading">
-        <!-- 服务 -->
-        <h4 class="card-title">服务<span style="font-size:1rem">&nbsp;Service</span></h4>
-        
-
-        <el-table :data="this.service_table" style="width: 100%;" @cell-click="table_click">
+        <h4 class="card-title">隧道<span style="font-size:1rem">&nbsp;Tunnel</span></h4>
+        <el-table :data="this.tunnel_table" style="width: 100%;" @cell-click="table_click">
           <el-table-column label="状态" width="50" min-width="40">
             <template slot-scope="scope">
               <div v-html="scope.row.status_html"></div>
@@ -352,9 +348,9 @@ export default {
       main_title: "状态监控",
       main_title_eng: "StatusLive",
       json: [],
+      tunnel_table: [],
       website_table: [],
       datacenter_table: [],
-      service_table: [],
       success: 0,
       danger: 0,
       info: 0,
@@ -536,16 +532,14 @@ export default {
     },
 
     refresh_status(json_up){
-      //var website_number = 0;
-      //var datacenter_number = 0;
       var logs_list_temp = [];
       
       this.success = 0;
       this.danger = 0;
       this.info = 0;
+      this.tunnel_table=[];
       this.website_table=[];
       this.datacenter_table=[];
-      this.service_table=[];
       for (let index = 0; index < json_up.monitors.length; index++) {
         //当前状态
         if(json_up.monitors[index].status < 2){
@@ -584,12 +578,12 @@ export default {
         if(json_up.monitors[index].type == 1){
           //HTTP检测归位
           this.website_table.push(json_up.monitors[index])
+        }else if(json_up.monitors[index].type == 2){
+          //Ping检测归位
+          this.tunnel_table.push(json_up.monitors[index])
         }else if(json_up.monitors[index].type == 3){
           //Ping检测归位
           this.datacenter_table.push(json_up.monitors[index])
-        }else{
-          //没地方去的去这里
-          this.service_table.push(json_up.monitors[index])
         }
 
         //处理日志
@@ -614,6 +608,7 @@ export default {
     
       //console.log(this.datacenter_table);
       //console.log(this.website_table);
+      //console.log(tunnel_table);
       //确定最终提示
       if(this.danger>0){
         if(this.danger>=this.success){

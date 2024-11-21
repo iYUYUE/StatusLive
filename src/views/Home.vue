@@ -87,6 +87,7 @@
 
 
       <el-card shadow="always" class="all-status-card" v-loading="table_loading">
+        <!-- 网站 -->
         <h4 class="card-title">网站<span style="font-size:1rem">&nbsp;WebSite</span></h4>
         
 
@@ -120,6 +121,7 @@
       </el-card>
 
       <el-card shadow="always" class="all-status-card" v-loading="table_loading">
+        <!-- 隧道 -->
         <h4 class="card-title">隧道<span style="font-size:1rem">&nbsp;Tunnel</span></h4>
         <el-table :data="this.tunnel_table" style="width: 100%;" @cell-click="table_click">
           <el-table-column label="状态" width="50" min-width="40">

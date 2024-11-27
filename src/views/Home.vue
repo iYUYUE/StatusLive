@@ -750,7 +750,7 @@ export default {
       }
     },
     show_respontime(t){
-      let lastLogTypeBeforeStartDate = t.logs[0];
+      let lastLogTypeBeforeStartDate = t.logs.length > 0 ? t.logs[0] : t.lastLogTypeBeforeStartDate;
       let response_times = t.response_times;
       console.log(t);
       let data = [];

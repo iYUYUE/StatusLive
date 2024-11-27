@@ -750,7 +750,7 @@ export default {
       }
     },
     show_respontime(t){
-      //let lastLogTypeBeforeStartDate = t.lastLogTypeBeforeStartDate;
+      let lastLogTypeBeforeStartDate = t.logs[0];
       let response_times = t.response_times;
       console.log(t);
       let data = [];
@@ -782,7 +782,7 @@ export default {
       }
       this.dialog.alert_title = t.friendly_name+' '+( t.status < 2 ? ' 监控因故暂停，近期平均在线率为 ' :'当前状态'+(t.status >= 8 ? '异常' : '正常') +'，在线率为 ') + t.custom_uptime_ratio+'% ，' + ( time[0]  ?  '最近一次探测响应时间：'+time[0]+' ms' : '暂无最近探测响应时间数据'  ) + "。";
       
-      this.dialog.alert_description = '最近动态：'+this.get_full_time(t.lastLogTypeBeforeStartDate.datetime)+' - '+this.type_to_text(t.lastLogTypeBeforeStartDate.type) +' - 具体信息：'+t.lastLogTypeBeforeStartDate.reason.code + ' - ' +t.lastLogTypeBeforeStartDate.reason.detail +  (t.lastLogTypeBeforeStartDate.type == 1 ? ' - 持续' +this.duration_to_text(t.lastLogTypeBeforeStartDate.duration) : '');
+      this.dialog.alert_description = '最近动态：'+this.get_full_time(lastLogTypeBeforeStartDate.datetime)+' - '+this.type_to_text(lastLogTypeBeforeStartDate.type) +' - 具体信息：'+lastLogTypeBeforeStartDate.reason.code + ' - ' +lastLogTypeBeforeStartDate.reason.detail +  (lastLogTypeBeforeStartDate.type == 1 ? ' - 持续' +this.duration_to_text(lastLogTypeBeforeStartDate.duration) : '');
 
       if(!time[0]){
         this.dialog.chart_show = false;
